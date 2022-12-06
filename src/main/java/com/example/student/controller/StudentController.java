@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
-@RequestMapping(path = "api/v1/student")
+@RequestMapping(path = "/api/v1/student")
 public class StudentController {
 
+    @Autowired
     private final StudentService studentService;
 
     public StudentController(StudentService studentService) {
@@ -17,12 +20,17 @@ public class StudentController {
     }
 
     @GetMapping
-    public void getStudent(){
-        studentService.getStudent();
+    public String getStudent(){
+        return studentService.getStudent();
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @PostMapping(path = "/add")
     public void addStudent(@RequestBody Student student){
         studentService.addStudent(student);
+    }
+
+    @DeleteMapping(path = "/delete")
+    public void deleteStudent(@RequestBody Student student){
+        studentService.deleteStudent(student);
     }
 }
